@@ -1,0 +1,619 @@
+/* ============================================================
+   THE WHISPERING TERMINAL — Stylesheet
+   Vanilla CSS. Terminal / classified-archive aesthetic.
+   ============================================================ */
+
+:root {
+  --bg-primary: #0b0b0c;
+  --bg-container: #141416;
+  --border-subtle: #222;
+  --border-accent: #333;
+  --text-body: #cccccc;
+  --text-dim: #777;
+  --text-faint: #444;
+  --accent: #d48806;
+  --accent-glow: rgba(212, 136, 6, 0.15);
+  --warn: #8a1818;
+  --warn-glow: rgba(138, 24, 24, 0.2);
+  --content-width: 650px;
+  --font-mono: "SF Mono", "Cascadia Code", "Fira Code", monospace;
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+}
+
+/* ---- Reset ---- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-body);
+  font-family: var(--font-body);
+  letter-spacing: 0.03em;
+  line-height: 1.8;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Links (chromatic aberration glitch on hover) ---- */
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: text-shadow 0.2s ease, color 0.2s ease;
+}
+a:hover {
+  text-shadow: 1px 0 var(--warn-glow), -1px 0 var(--accent-glow);
+}
+
+/* ---- Inline code / emphasis ---- */
+code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  color: var(--accent);
+}
+strong {
+  font-weight: 600;
+  color: var(--text-body);
+}
+em { font-style: italic; }
+
+/* ---- Candlelight mode ---- */
+@keyframes candle-flicker {
+  0%, 100% { opacity: 0.93; }
+  25%      { opacity: 0.97; }
+  50%      { opacity: 0.91; }
+  75%      { opacity: 0.96; }
+}
+body.candlelight::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+  background: radial-gradient(ellipse at 50% 0%, var(--accent-glow), transparent 70%);
+  animation: candle-flicker 3s ease-in-out infinite;
+}
+
+/* ---- Navigation ---- */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-subtle);
+  transition: transform 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  padding: 0 1.5rem;
+}
+nav[data-hidden] {
+  transform: translateY(-100%);
+}
+nav ul {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  gap: 1.2rem;
+  align-items: center;
+}
+nav li a {
+  display: block;
+  padding: 0.9rem 0;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+nav li a:hover,
+nav li a.active {
+  color: var(--accent);
+}
+
+/* ---- Candlelight toggle ---- */
+.candlelight-toggle {
+  background: none;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-dim);
+  cursor: pointer;
+  padding: 0.3rem 0.7rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  border-radius: 2px;
+  transition: border-color 0.3s ease, color 0.3s ease;
+  white-space: nowrap;
+}
+.candlelight-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ---- Site header ---- */
+.site-header {
+  text-align: center;
+  padding: 4rem 1.5rem 2rem;
+}
+.site-header h1 {
+  font-family: var(--font-mono);
+  font-size: 1.3rem;
+  font-weight: 400;
+  letter-spacing: 0.25em;
+  color: var(--text-body);
+  text-transform: uppercase;
+}
+.site-header p {
+  margin-top: 0.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--text-faint);
+}
+
+/* ---- Container ---- */
+.container {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem;
+}
+
+/* ---- Section titles ---- */
+.section-title {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 0.5rem;
+  margin: 2rem 0 1.5rem;
+}
+
+/* ---- Clearance badge (status line) ---- */
+.clearance-badge {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  opacity: 0.6;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* ---- Clearance tag (classified label) ---- */
+.clearance-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 0.15em 0.6em;
+}
+
+/* ---- Story cards ---- */
+.story-list {
+  list-style: none;
+}
+.story-card {
+  background: var(--bg-container);
+  border: 1px solid var(--border-subtle);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  transition: border-color 0.3s ease;
+}
+.story-card:hover {
+  border-color: var(--border-accent);
+}
+.story-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  gap: 1rem;
+}
+.story-date {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+}
+.story-card-title {
+  font-size: 1.1rem;
+  font-weight: 400;
+  margin: 0.5rem 0;
+}
+.story-card-title a {
+  color: var(--text-body);
+  text-decoration: none;
+}
+.story-card-title a:hover {
+  color: var(--accent);
+}
+.story-card-excerpt {
+  font-size: 0.88rem;
+  color: var(--text-dim);
+  line-height: 1.7;
+  margin: 0.5rem 0 0.75rem;
+}
+.story-card-footer {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--text-faint);
+}
+
+/* Glitch title on card hover */
+.story-card:hover .story-card-title a {
+  text-shadow: 1px 0 var(--warn-glow), -1px 0 var(--accent-glow);
+}
+
+/* ---- Author dossier ---- */
+.author-dossier {
+  background: var(--bg-container);
+  border: 1px solid var(--border-subtle);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.author-dossier-name {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+.dossier-count {
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  color: var(--text-dim);
+  font-weight: 400;
+}
+.author-dossier-bio {
+  font-size: 0.88rem;
+  color: var(--text-dim);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+.author-dossier .story-card {
+  margin-bottom: 0.75rem;
+}
+.author-dossier .story-card:last-child {
+  margin-bottom: 0;
+}
+
+/* ---- Empty state ---- */
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  color: var(--text-faint);
+}
+
+/* ---- Story author (reusable meta span) ---- */
+.story-author {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+}
+
+/* ---- Footer ---- */
+footer {
+  border-top: 1px solid var(--border-subtle);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  color: var(--text-faint);
+}
+
+/* ---- Easter egg ---- */
+.easter-egg {
+  text-align: center;
+  padding: 8rem 1.5rem 4rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  color: var(--text-faint);
+  opacity: 0;
+  transition: opacity 4s ease;
+}
+.easter-egg.visible {
+  opacity: 0.6;
+}
+
+/* ---- Story detail page ---- */
+.story-detail {
+  max-width: var(--content-width);
+}
+.story-back {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  margin-bottom: 1.5rem;
+}
+.story-back a {
+  color: var(--text-dim);
+}
+.story-back a:hover {
+  color: var(--accent);
+}
+.story-detail-title {
+  font-family: var(--font-body);
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--text-body);
+  letter-spacing: 0.05em;
+  margin-bottom: 0.8rem;
+  line-height: 1.4;
+}
+.story-detail-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.2rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+/* ---- Reading body (shared typography for story + about) ---- */
+.story-detail-body,
+.about-content {
+  font-size: 1rem;
+  color: var(--text-body);
+  line-height: 2;
+}
+.story-detail-body p,
+.about-content p {
+  margin: 1.2rem 0;
+}
+.story-detail-body p {
+  text-indent: 2em;
+}
+.story-detail-body h1,
+.about-content h1,
+.story-detail-body h2,
+.about-content h2,
+.story-detail-body h3,
+.about-content h3 {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin: 1.8rem 0 0.9rem;
+  text-indent: 0;
+}
+.story-detail-body h1,
+.about-content h1 { font-size: 1.2rem; }
+.story-detail-body h2,
+.about-content h2 { font-size: 1.05rem; }
+.story-detail-body h3,
+.about-content h3 { font-size: 0.95rem; }
+.story-detail-body ul,
+.about-content ul,
+.story-detail-body ol,
+.about-content ol {
+  margin: 1.2rem 0 1.2rem 1.6rem;
+}
+.story-detail-body li,
+.about-content li {
+  margin: 0.4rem 0;
+}
+.story-detail-body a,
+.about-content a {
+  color: var(--accent);
+}
+.story-detail-body code,
+.about-content code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  color: var(--accent);
+}
+.story-detail-body strong,
+.about-content strong {
+  font-weight: 600;
+  color: var(--text-body);
+}
+
+/* ---- About content (bordered container) ---- */
+.about-content {
+  background: var(--bg-container);
+  border: 1px solid var(--border-subtle);
+  padding: 1.5rem 1.8rem;
+  margin-bottom: 2rem;
+}
+.about-content h1:first-child,
+.about-content h2:first-child,
+.about-content h3:first-child {
+  margin-top: 0;
+}
+
+/* ---- About personnel row ---- */
+.about-author-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--border-subtle);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+}
+.about-author-row:last-child {
+  border-bottom: none;
+}
+.about-author-row .name {
+  color: var(--accent);
+}
+.about-author-row .count {
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  color: var(--text-dim);
+}
+
+/* ---- Selection ---- */
+::selection {
+  background: var(--accent);
+  color: var(--bg-primary);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 600px) {
+  nav {
+    gap: 1rem;
+    padding: 0 1rem;
+  }
+  nav ul {
+    gap: 0.9rem;
+  }
+  nav li a {
+    padding: 0.8rem 0;
+    font-size: 0.72rem;
+  }
+  .candlelight-toggle {
+    font-size: 0.62rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .site-header {
+    padding: 3rem 1rem 1.5rem;
+  }
+  .site-header h1 {
+    font-size: 1.05rem;
+    letter-spacing: 0.18em;
+  }
+  .site-header p {
+    font-size: 0.62rem;
+  }
+
+  .container {
+    padding: 1.5rem 1rem;
+  }
+
+  .story-card {
+    padding: 1.1rem;
+  }
+  .story-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+
+  .story-detail-title {
+    font-size: 1.25rem;
+  }
+  .story-detail-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .about-content {
+    padding: 1.2rem;
+  }
+
+  .author-dossier {
+    padding: 1.1rem;
+  }
+
+  .easter-egg {
+    padding: 5rem 1rem 3rem;
+  }
+
+  footer {
+    padding: 1.5rem 1rem;
+  }
+}
+
+/* ============================================================
+   海龟汤：汤面消散 / 汤底揭示
+   ============================================================ */
+
+/* 揭示按钮 */
+.reveal-section {
+  text-align: center;
+  margin: 2.5rem 0;
+}
+
+.reveal-btn {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  color: var(--accent);
+  background: transparent;
+  border: 1px solid var(--accent);
+  padding: 0.8rem 2rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.reveal-btn:hover {
+  background: var(--accent);
+  color: var(--bg-primary);
+  text-shadow: none;
+}
+
+.reveal-btn.revealed {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* 汤底初始隐藏 */
+.story-bottom {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.6s ease, max-height 0.6s ease;
+}
+
+.story-bottom.visible {
+  opacity: 1;
+  max-height: 20000px;
+}
+
+/* 汤面消散动画 */
+@keyframes surface-dissolve {
+  0%   { opacity: 1; filter: blur(0); }
+  20%  { opacity: 0.8; filter: blur(1px); letter-spacing: 0.05em; }
+  40%  { opacity: 0.5; filter: blur(3px); letter-spacing: 0.15em; }
+  70%  { opacity: 0.2; filter: blur(6px); letter-spacing: 0.3em; }
+  100% { opacity: 0; filter: blur(12px); letter-spacing: 0.5em; }
+}
+
+.story-surface.dissolving {
+  animation: surface-dissolve 1.2s ease-in forwards;
+  pointer-events: none;
+  user-select: none;
+}
+
+.story-surface.dissolved {
+  display: none;
+}

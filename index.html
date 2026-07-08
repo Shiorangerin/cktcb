@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>诡异故事集</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="index.html" class="active">主页</a></li>
+      <li><a href="authors.html">按作者</a></li>
+      <li><a href="about.html">关于</a></li>
+    </ul>
+    <button class="candlelight-toggle" title="蜡烛光模式" aria-label="切换蜡烛光模式">CANDLELIGHT</button>
+  </nav>
+
+  <div class="site-header">
+    <h1>Curiosity killed the cat</h1>
+    <p>but satisfaction brought it back</p>
+  </div>
+
+  <div class="container">
+    <div class="clearance-badge">&#x25cf; LIVE FEED &mdash; CLASSIFIED ARCHIVE ACCESS</div>
+    <h2 class="section-title">最新收录</h2>
+    <ul class="story-list" id="story-list">
+      <!-- 由 js 动态渲染 -->
+    </ul>
+  </div>
+
+  <footer>诡异故事集 · 群友作品</footer>
+  <div class="easter-egg">IT'S WATCHING BACK.</div>
+
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
