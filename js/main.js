@@ -7,7 +7,7 @@
   (function initCandlelight() {
     const btn = document.querySelector('.candlelight-toggle');
     if (!btn) return;
-    if (localStorage.getItem('candlelight-mode') === 'on') {
+    if (localStorage.getItem('candlelight-mode') === null || localStorage.getItem('candlelight-mode') === 'on') {
       document.body.classList.add('candlelight');
     }
     btn.addEventListener('click', () => {
